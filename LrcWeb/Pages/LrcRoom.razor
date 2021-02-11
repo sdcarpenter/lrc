@@ -1,12 +1,12 @@
 ﻿@page "/lrcroom"
 @inject NavigationManager navigationManager
+@inject IJSRuntime JSRuntime
 @using Microsoft.AspNetCore.SignalR.Client;
 
 <h3>LrcRoom</h3>
 
 <h1>Blazor SignalR Chat Sample</h1>
 <hr />
-
 @if (!_isChatting)
 {
     <p>
@@ -100,6 +100,8 @@ else
                 .Build();
 
             _hubConnection.On<string, string>("Broadcast", BroadcastMessage);
+
+            await JSRuntime.InvokeAsync<string>("blazorExtensions.WriteCookie", "username", _username, 1);
 
             await _hubConnection.StartAsync();
 
