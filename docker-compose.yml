@@ -1,0 +1,22 @@
+version: '3'
+
+services:
+  lrc-db:
+    image: postgres:13
+    container_name: lrc-db
+    restart: unless-stopped
+    env_file: .env
+    volumes: 
+      - lrc-dbdata:/var/lib/postgresql/data
+      - ./docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d
+    ports:
+      - '6000:5432'
+    networks:
+      - app-network
+
+volumes:
+  lrc-dbdata:
+
+networks:
+  app-network:
+    driver: bridge
