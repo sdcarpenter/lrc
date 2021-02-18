@@ -16,16 +16,16 @@ namespace LrcData.Migrations
             modelBuilder
                 .UseIdentityByDefaultColumns()
                 .HasAnnotation("Relational:MaxIdentifierLength", 63)
-                .HasAnnotation("ProductVersion", "5.0.1");
+                .HasAnnotation("ProductVersion", "5.0.2");
 
-            modelBuilder.Entity("LrcData.Lobby", b =>
+            modelBuilder.Entity("LrcData.Room", b =>
                 {
-                    b.Property<string>("LobbyName")
+                    b.Property<string>("Name")
                         .HasColumnType("text");
 
-                    b.HasKey("LobbyName");
+                    b.HasKey("Name");
 
-                    b.ToTable("Lobbies");
+                    b.ToTable("Rooms");
                 });
 #pragma warning restore 612, 618
         }

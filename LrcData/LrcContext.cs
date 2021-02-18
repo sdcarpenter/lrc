@@ -14,11 +14,11 @@ namespace LrcData
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Lobby>()
-                .HasKey(c => c.LobbyName);
+            modelBuilder.Entity<Room>()
+                .HasKey(c => c.Name);
         }
 
-        public DbSet<Lobby> Lobbies { get; set; }
+        public DbSet<Room> Rooms { get; set; }
     }
 
     public class LrcContextFactory : IDesignTimeDbContextFactory<LrcContext>

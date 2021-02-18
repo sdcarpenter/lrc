@@ -1,4 +1,4 @@
-﻿@page "/lrcroom"
+﻿@page "/lrcroom/{roomName}"
 @inject NavigationManager navigationManager
 @inject IJSRuntime JSRuntime
 @using Microsoft.AspNetCore.SignalR.Client;
@@ -54,6 +54,9 @@ else
 }
 
 @code {
+    [Parameter]
+    public string RoomName { get; set; }
+
     // flag to indicate chat status
     private bool _isChatting = false;
 
@@ -104,6 +107,7 @@ else
             await JSRuntime.InvokeAsync<string>("blazorExtensions.WriteCookie", "username", _username, 1);
 
             await _hubConnection.StartAsync();
+            await JoinOrStartRoom();
 
             await SendAsync($"[Notice] {_username} joined chat room.");
         }
@@ -146,6 +150,11 @@ else
 
             _newMessage = string.Empty;
         }
+    }
+
+    private async Task JoinOrStartRoom()
+    {
+        await _hubConnection.SendAsync(nameof(LrcHub.JoinOrCreateRoom), RoomName, _username);
     }
 
     private class Message
